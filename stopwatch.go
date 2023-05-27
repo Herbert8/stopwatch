@@ -17,7 +17,11 @@ type Stopwatch struct {
 	name        string
 	startTime   time.Time
 	checkpoints []Checkpoint
+	Enabled     bool
 }
+
+// Enabled 开关
+var Enabled bool
 
 // 日志
 var logger *log.Logger
@@ -41,6 +45,7 @@ func NewStopwatch(name string) *Stopwatch {
 				time: now,
 			},
 		},
+		Enabled: true,
 	}
 }
 
@@ -86,17 +91,19 @@ func (receiver *Stopwatch) PrintDurationSinceLastCheckpoint(tag string) {
 	duration := receiver.SinceLastCheckpoint(tag)
 	newCheckpoint := receiver.LastCheckpoint()
 	s := fmt.Sprintf("[%s] since [Checkpoint] [%s->%s]: %s", receiver.name, lastCheckpoint.tag, newCheckpoint.tag, duration)
-	printString(s)
+	receiver.printString(s)
 }
 
 // 使用 logger 打印字符串，显示代码行号
-func printString(s string) {
-	_ = logger.Output(3, s)
+func (receiver *Stopwatch) printString(s string) {
+	if Enabled && receiver.Enabled {
+		_ = logger.Output(3, s)
+	}
 }
 
 // PrintDurationSinceStart 显示距离开始时间的时间间隔
 func (receiver *Stopwatch) PrintDurationSinceStart() {
 	duration := receiver.SinceStart()
 	s := fmt.Sprintf("[%s] since [Start]: %s", receiver.name, duration)
-	printString(s)
+	receiver.printString(s)
 }
