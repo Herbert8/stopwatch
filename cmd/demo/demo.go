@@ -14,7 +14,7 @@ func main() {
 
 	checkpointTester := stopwatch.NewStopwatch("CheckpointTester")
 	time.Sleep(time.Second)
-	checkpointTester.PrintDurationSinceLastCheckpoint()
+	checkpointTester.PrintDurationSinceLastCheckpoint("CheckpointA")
 	time.Sleep(time.Second * 2)
-	checkpointTester.PrintDurationSinceLastCheckpoint()
+	checkpointTester.PrintDurationSinceLastCheckpoint("CheckpointB")
 }
