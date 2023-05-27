@@ -6,7 +6,9 @@ import (
 )
 
 func main() {
+	stopwatch.Enabled = true
 	sinceStartTester := stopwatch.NewStopwatch("SinceStartTester")
+	sinceStartTester.Enabled = false
 	time.Sleep(time.Second)
 	sinceStartTester.PrintDurationSinceStart()
 	time.Sleep(time.Second * 2)
